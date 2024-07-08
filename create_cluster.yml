@@ -1,0 +1,10 @@
+---
+# This playbook prints a simple debug message
+- name: Noop Create Cluster
+  hosts: localhost
+
+  tasks:
+  - debug: msg="Creating Cluster"
+  - debug: var=vars
+#  - debug: var=param_cluster_name
+#  - debug: var=cluster_name
