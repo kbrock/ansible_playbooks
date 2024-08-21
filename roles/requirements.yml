@@ -1,4 +1,9 @@
 ---
 # from galaxy
+roles:
 - src: syncrou.manageiq-automate
 - src: syncrou.manageiq-vmdb
+# from galaxy for the aws example
+collections:
+- name: amazon.aws
+  version: "5.5.1"

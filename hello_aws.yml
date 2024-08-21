@@ -1,0 +1,28 @@
+---
+- name: Run basic script to reproduce errors
+  hosts: localhost
+  gather_facts: yes
+  tasks:
+    - name: ansible version
+      debug: msg="ansible= {{ ansible_version.full }}"
+    - name: python version
+      debug: msg="python= {{ ansible_facts.python.version }}"
+    - register: libraries
+      shell: |
+        ansible-galaxy collection list | grep aws
+    - name: list installed aws libraries and versions
+      debug:
+        msg: " {{ libraries.stdout_lines }} "
+    - name: view ec2 upgrade information
+      command: ansible-galaxy collection list amazon.aws
+    ###
+    - name: load ec2_key module to display errors
+      amazon.aws.ec2_key:
+        name: key_pair
+        state: present
+        region: us-east-2
+        # key_material: "{{ lookup('file', 'path_to_your_key_file.pem') }}"
+      register: result
+    - name: keypair information
+      debug:
+        msg: "The EC2 key pair operation result= {{ result }}"
